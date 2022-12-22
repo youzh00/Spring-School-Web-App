@@ -1,18 +1,23 @@
 package school_web_app.controllers;
 
 
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.logging.Logger;
+import school_web_app.model.Contact;
+import school_web_app.service.ContactService;
 
 @Controller
 public class ContactController {
+
+    private final ContactService contactService;
+
+    @Autowired
+    public ContactController(ContactService contactService) {
+        this.contactService = contactService;
+    }
 
     @GetMapping("/contact")
     public String displayContactPage(){
@@ -20,9 +25,8 @@ public class ContactController {
     }
 
     @PostMapping(value = "/saveMsg")
-    public ModelAndView saveMessage(@RequestParam String name,@RequestParam String mobileNum,
-            @RequestParam String email,@RequestParam String subject,@RequestParam String message){
-        System.out.println("Name :"+name);
+    public ModelAndView saveMessage(Contact contact){
+        contactService.submitContactFormDetail(contact);
         return new ModelAndView("redirect:/contact");
     }
 
