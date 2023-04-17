@@ -9,6 +9,7 @@ import school_web_app.model.Contact;
 import school_web_app.repository.ContactRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -31,5 +32,21 @@ public class ContactService {
         return isSaved;
     }
 
+    public List<Contact> findMsgsWithOpenStatus(){
+        List<Contact> contactMsg=contactRepository.findMsgsWithStatus(SchoolConstants.OPEN);
+        for (Contact item : contactMsg) {
+            System.out.println("this is the contact : "+item.toString());
+        }
+        return contactMsg;
+    }
+
+    public boolean updateMsgStatus(int contactId, String updatedBy){
+        boolean isUpdated=false;
+        int result = contactRepository.updateMsgStatus(contactId,SchoolConstants.CLOSE, updatedBy);
+
+        if (result>0) isUpdated=true;
+
+        return isUpdated;
+    }
 }
 
