@@ -4,11 +4,11 @@ import lombok.Data;
 import lombok.Getter;
 
 @Data
-public class Holiday {
+public class Holiday extends BaseEntity{
 
-    public final String day;
-    public final String reason;
-    public final Type type;
+    public  String day;
+    public  String reason;
+    public Type type;
     public enum Type{
         FESTIVAL, FEDERAL
     }
