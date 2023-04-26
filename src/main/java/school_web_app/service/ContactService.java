@@ -10,6 +10,7 @@ import school_web_app.repository.ContactRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -26,14 +27,14 @@ public class ContactService {
         contact.setCreatedBy(SchoolConstants.ANONYMOUS);
         contact.setCreatedAt(LocalDateTime.now());
 
-        int result=contactRepository.saveContactMsg(contact);
+        Contact savedContact=contactRepository.save(contact);
 
-        if (result>0) isSaved=true;
+        if (savedContact!=null && savedContact.getContactId()>0) isSaved=true;
         return isSaved;
     }
 
     public List<Contact> findMsgsWithOpenStatus(){
-        List<Contact> contactMsg=contactRepository.findMsgsWithStatus(SchoolConstants.OPEN);
+        List<Contact> contactMsg=contactRepository.findContactsByStatus(SchoolConstants.OPEN);
         for (Contact item : contactMsg) {
             System.out.println("this is the contact : "+item.toString());
         }
@@ -42,9 +43,15 @@ public class ContactService {
 
     public boolean updateMsgStatus(int contactId, String updatedBy){
         boolean isUpdated=false;
-        int result = contactRepository.updateMsgStatus(contactId,SchoolConstants.CLOSE, updatedBy);
+        Optional<Contact> optionalContact=contactRepository.findById(contactId);
+        optionalContact.ifPresent(contact -> {
+            contact.setStatus(SchoolConstants.CLOSE);
+            contact.setUpdatedBy(updatedBy);
+            contact.setUpdatedAt(LocalDateTime.now());
+        });
 
-        if (result>0) isUpdated=true;
+        Contact updatedContact=contactRepository.save(optionalContact.get());
+        if (updatedContact != null && updatedContact.getContactId()>0) isUpdated=true;
 
         return isUpdated;
     }
