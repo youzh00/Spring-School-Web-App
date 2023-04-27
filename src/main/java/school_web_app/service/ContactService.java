@@ -24,8 +24,6 @@ public class ContactService {
         boolean isSaved=false;
 
         contact.setStatus(SchoolConstants.OPEN);
-        contact.setCreatedBy(SchoolConstants.ANONYMOUS);
-        contact.setCreatedAt(LocalDateTime.now());
 
         Contact savedContact=contactRepository.save(contact);
 
@@ -46,8 +44,6 @@ public class ContactService {
         Optional<Contact> optionalContact=contactRepository.findById(contactId);
         optionalContact.ifPresent(contact -> {
             contact.setStatus(SchoolConstants.CLOSE);
-            contact.setUpdatedBy(updatedBy);
-            contact.setUpdatedAt(LocalDateTime.now());
         });
 
         Contact updatedContact=contactRepository.save(optionalContact.get());

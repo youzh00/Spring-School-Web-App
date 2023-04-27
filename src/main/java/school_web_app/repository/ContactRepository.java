@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 import school_web_app.model.Contact;
-import school_web_app.rowMappers.ContactRowMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
