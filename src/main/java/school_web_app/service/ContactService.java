@@ -24,7 +24,7 @@ public class ContactService {
         boolean isSaved=false;
 
         contact.setStatus(SchoolConstants.OPEN);
-
+        log.info(String.valueOf(contact));
         Contact savedContact=contactRepository.save(contact);
 
         if (savedContact!=null && savedContact.getContactId()>0) isSaved=true;
@@ -39,7 +39,7 @@ public class ContactService {
         return contactMsg;
     }
 
-    public boolean updateMsgStatus(int contactId, String updatedBy){
+    public boolean updateMsgStatus(int contactId){
         boolean isUpdated=false;
         Optional<Contact> optionalContact=contactRepository.findById(contactId);
         optionalContact.ifPresent(contact -> {

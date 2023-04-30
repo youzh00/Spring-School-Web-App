@@ -38,6 +38,7 @@ public class ContactController {
             log.error("Error in contact form validation : "+errors.toString());
             return "contact.html";
         }
+        log.info(String.valueOf(contact));
         contactService.submitContactFormDetail(contact);
         return "redirect:/contact";
     }
@@ -54,8 +55,8 @@ public class ContactController {
     }
 
     @GetMapping(value = "/closeMsg")
-    public String closeMsg(@RequestParam  int id, Authentication authentication){
-        contactService.updateMsgStatus(id,authentication.getName());
+    public String closeMsg(@RequestParam  int id){
+        contactService.updateMsgStatus(id);
         return "redirect:/displayMessages";
     }
 
