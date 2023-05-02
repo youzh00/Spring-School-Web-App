@@ -7,6 +7,6 @@ import school_web_app.model.Roles;
 
 @Repository
 public interface RolesRepository extends JpaRepository<Roles,Integer> {
-    public Roles getByRoleName(String name);
+     Roles getByRoleName(String name);
 
 }
